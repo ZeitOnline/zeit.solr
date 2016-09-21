@@ -1,10 +1,10 @@
 zeit.solr changes
 =================
 
-2.9.1 (unreleased)
+2.10.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update to `zeit.cms >= 2.90`.
 
 
 2.9.0 (2016-09-01)
