@@ -56,8 +56,8 @@ class TestAccessCounter(unittest.TestCase):
 class TestConverter(zeit.solr.testing.FunctionalTestCase):
 
     def get_content(self):
-        from zeit.cms.testcontenttype.testcontenttype import TestContentType
-        return TestContentType()
+        from zeit.cms.testcontenttype.testcontenttype import ExampleContentType
+        return ExampleContentType()
 
     def convert(self, content):
         import zeit.solr.interfaces
