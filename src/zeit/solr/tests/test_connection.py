@@ -1,7 +1,6 @@
 import gocept.httpserverlayer.custom
 import lxml.objectify
 import pysolr
-import socket
 import time
 import unittest
 import zeit.solr.connection
