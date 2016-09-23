@@ -8,6 +8,7 @@ import zeit.cms.relation.interfaces
 import zeit.connector.interfaces
 import zeit.content.article.interfaces
 import zeit.content.image.interfaces
+import zeit.content.volume.interfaces
 import zeit.solr.interfaces
 import zeit.workflow.interfaces
 import zope.component
@@ -274,6 +275,24 @@ class ImageIndex(Index):
         self.append_to_node(unicode(type), doc_node)
 
 
+class VolumeIndex(Index):
+    # XXX kludgy special case to only apply to IVolume objects and not to other
+    # ICMSContent that has been adapted to find their IVolume.
+
+    def process(self, value, doc_node):
+        if not zeit.content.volume.interfaces.IVolume.providedBy(value):
+            return
+
+        solr_date = str(value.date_digital_published).replace(' ', 'T', 1)
+        solr_date = solr_date.replace('+00:00', 'Z')
+        self.solr = 'date_digital_published'
+        self.append_to_node(unicode(solr_date), doc_node)
+
+        if value.product:
+            self.solr = 'product_id'
+            self.append_to_node(value.product.id, doc_node)
+
+
 class SolrConverter(object):
     """Convert content objects to XML data using a Solr schema to feed the Solr
     server.
@@ -452,6 +471,7 @@ class SolrConverter(object):
     Date(
         zeit.cms.content.interfaces.ICommonMetadata,
         'tldr_date')
+    VolumeIndex(zeit.cms.interfaces.ICMSContent, None)
 
     def __init__(self, context):
         self.context = context

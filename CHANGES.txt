@@ -4,7 +4,7 @@ zeit.solr changes
 2.10.0 (unreleased)
 ------------------
 
-- Update to `zeit.cms >= 2.90`.
+- ZON-3362: Index properties of ``IVolume`` objects.
 
 
 2.9.0 (2016-09-01)

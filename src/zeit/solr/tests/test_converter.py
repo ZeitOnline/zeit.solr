@@ -142,3 +142,42 @@ class TestConverter(zeit.solr.testing.FunctionalTestCase):
         self.assertEqual(
             'Feuilleton',
             xml.xpath('//field[@name="ns-print-ressort"]')[0].text)
+
+    def test_volume_is_indexed(self):
+        import datetime
+        import pytz
+        import zeit.content.volume.volume
+        volume = zeit.content.volume.volume.Volume()
+        volume.uniqueId = 'http://xml.zeit.de/volume'
+        volume.year = 2015
+        volume.volume = 1
+        volume.product = zeit.cms.content.sources.Product(u'ZEI')
+        volume.date_digital_published = datetime.datetime(
+            2015, 1, 1, 0, 0, tzinfo=pytz.UTC)
+        xml = self.convert(volume)
+        self.assertEqual('volume', xml.xpath('//field[@name="type"]')[0].text)
+        self.assertEqual(
+            volume.uniqueId, xml.xpath('//field[@name="uniqueId"]')[0].text)
+        self.assertEqual('2015', xml.xpath('//field[@name="year"]')[0].text)
+        self.assertEqual('1', xml.xpath('//field[@name="volume"]')[0].text)
+        self.assertEqual(
+            '2015-01-01T00:00:00Z',
+            xml.xpath('//field[@name="date_digital_published"]')[0].text)
+
+    def test_does_not_index_volume_properties_for_articles(self):
+        content = self.get_content()
+        content.year = 2006
+        content.volume = 49
+        content.product = zeit.cms.content.sources.Product(u'ZEI')
+        self.repository['content'] = content
+        volume = zeit.content.volume.volume.Volume()
+        volume.year = content.year
+        volume.volume = content.volume
+        volume.product = content.product
+        self.repository['2006']['49']['ausgabe'] = volume
+
+        found = zeit.content.volume.interfaces.IVolume(content)
+        self.assertEqual(found, volume)
+
+        xml = self.convert(content)
+        self.assertFalse(xml.xpath('//field[@name="date_digital_published"]'))
