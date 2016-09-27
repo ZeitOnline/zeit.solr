@@ -285,6 +285,7 @@
    <field name="date-last-modified" type="date" indexed="true" stored="true" />
    <field name="date-last-published" type="date" indexed="true" stored="true" />
    <field name="date-last-published-semantic" type="date" indexed="true" stored="true" />
+   <field name="date_digital_published" type="date" indexed="true" stored="true" />
    <field name="DailyNL" type="boolean" indexed="true" stored="true" />
    <field name="expires" type="date" indexed="true" stored="true" />
    <field name="created" type="date" indexed="true" stored="true" />

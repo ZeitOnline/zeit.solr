@@ -16,6 +16,8 @@
   <include package="zeit.content.image" />
   <include package="zeit.content.image.browser" />
 
+  <include package="zeit.content.volume" />
+
   <principal
     id="zope.solr"
     title="Updater"

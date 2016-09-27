@@ -26,6 +26,7 @@ setup(
         'zeit.connector>=1.24.0dev',
         'zeit.content.article>=3.14.1.dev0',
         'zeit.content.image',
+        'zeit.content.volume',
         'zope.index',
     ],
     entry_points="""
