@@ -283,14 +283,14 @@ class VolumeIndex(Index):
         if not zeit.content.volume.interfaces.IVolume.providedBy(value):
             return
 
-        solr_date = str(value.date_digital_published).replace(' ', 'T', 1)
-        solr_date = solr_date.replace('+00:00', 'Z')
-        self.solr = 'date_digital_published'
-        self.append_to_node(unicode(solr_date), doc_node)
+        self.solr = 'product_id'
+        self.append_to_node(value.product.id, doc_node)
 
-        if value.product:
-            self.solr = 'product_id'
-            self.append_to_node(value.product.id, doc_node)
+        if value.date_digital_published:
+            solr_date = str(value.date_digital_published).replace(' ', 'T', 1)
+            solr_date = solr_date.replace('+00:00', 'Z')
+            self.solr = 'date_digital_published'
+            self.append_to_node(unicode(solr_date), doc_node)
 
 
 class SolrConverter(object):
