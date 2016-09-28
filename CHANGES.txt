@@ -1,8 +1,8 @@
 zeit.solr changes
 =================
 
-2.10.0 (unreleased)
-------------------
+2.10.0 (2016-09-28)
+-------------------
 
 - ZON-3362: Index properties of ``IVolume`` objects.
 
