@@ -116,7 +116,7 @@ class ContentUpdater(object):
                 return None
             else:
                 if zeit.cms.repository.interfaces.ICollection.providedBy(
-                    content):
+                        content):
                     stack.extend(content.values())
 
 
@@ -155,7 +155,7 @@ def index_after_add(event):
     if zeit.cms.repository.interfaces.IRepository.providedBy(context):
         return
     if zeit.cms.workingcopy.interfaces.IWorkingcopy.providedBy(
-        event.newParent):
+            event.newParent):
         return
     log.info('AfterAdd: Creating async index job for %s (async=%s)' % (
         context.uniqueId, gocept.async.is_async()))
@@ -184,7 +184,7 @@ def do_index_object(unique_id):
     zope.lifecycleevent.IObjectRemovedEvent)
 def unindex_on_remove(context, event):
     if zeit.cms.workingcopy.interfaces.IWorkingcopy.providedBy(
-        event.oldParent):
+            event.oldParent):
         return
     do_unindex_unique_id(context.uniqueId)
 

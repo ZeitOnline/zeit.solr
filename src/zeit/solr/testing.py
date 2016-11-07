@@ -59,9 +59,9 @@ class ZCMLLayer(zeit.cms.testing.ZCMLLayer):
 
 ZCML_LAYER = ZCMLLayer(
     'ftesting.zcml',
-    product_config=cms_product_config
-    + zeit.content.article.testing.product_config
-    + product_config)
+    product_config=cms_product_config +
+    zeit.content.article.testing.product_config +
+    product_config)
 
 
 class SolrMockLayer(plone.testing.Layer):
