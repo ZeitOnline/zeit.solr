@@ -50,7 +50,7 @@ class Index(object):
             solr = attribute
         self.solr = solr
         self.filter = filter
-        solr_mapping = inspect.stack()[stackup][0].f_locals.setdefault(
+        solr_mapping = inspect.currentframe(stackup).f_locals.setdefault(
             'solr_mapping', [])
         solr_mapping.append(self)
 
@@ -76,7 +76,7 @@ class TextIndex(Index):
             solr = attribute
         self.solr = solr
         self.filter = filter
-        solr_mapping = inspect.stack()[stackup][0].f_locals.setdefault(
+        solr_mapping = inspect.currentframe(stackup).f_locals.setdefault(
             'solr_mapping', [])
         solr_mapping.append(self)
 
