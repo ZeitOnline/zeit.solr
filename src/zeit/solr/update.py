@@ -167,7 +167,7 @@ def index_after_checkin(context, event):
     do_index_object.delay(context.uniqueId)
 
 
-@zeit.cms.celery.CELERY.task()
+@zeit.cms.celery.task()
 def do_index_object(unique_id):
     context = zeit.cms.interfaces.ICMSContent(unique_id, None)
     if context is None:
