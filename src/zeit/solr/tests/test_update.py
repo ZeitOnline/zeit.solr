@@ -1,5 +1,4 @@
 # coding: utf8
-
 from __future__ import with_statement
 from zeit.cms.testcontenttype.testcontenttype import ExampleContentType
 import mock
@@ -11,6 +10,7 @@ import zeit.solr.testing
 import zope.component
 import zope.event
 import zope.lifecycleevent
+import zope.security.management
 
 
 def checkout_and_checkin():
@@ -68,15 +68,21 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
             zeit.cms.repository.interfaces.IRepository)
         with zeit.cms.checkout.helper.checked_out(repository['testcontent']):
             pass
-        transaction.commit()
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/testcontent')
 
     def test_update_should_be_called_in_async(self):
-        checkout_and_checkin()
-        self.assertFalse(self.solr.update_raw.called)
-        transaction.commit()
-        self.assertTrue(self.solr.update_raw.called)
+        run_instantly = 'zeit.cms.celery.TransactionAwareTask.run_instantly'
+        run_asynchronously = (
+            'zeit.cms.celery.TransactionAwareTask.run_asynchronously')
+        with mock.patch(run_instantly, return_value=False), \
+                mock.patch(run_asynchronously, return_value=False):
+            checkout_and_checkin()
+            self.assertFalse(self.solr.update_raw.called)
+
+            zope.security.management.endInteraction()
+            transaction.commit()
+            self.assertTrue(self.solr.update_raw.called)
 
     def test_recursive(self):
         zeit.solr.interfaces.IUpdater(
