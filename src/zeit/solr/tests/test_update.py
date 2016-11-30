@@ -72,9 +72,9 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         self.assert_unique_id('http://xml.zeit.de/testcontent')
 
     def test_update_should_be_called_in_async(self):
-        run_instantly = 'zeit.cms.celery.TransactionAwareTask.run_instantly'
+        run_instantly = 'z3c.celery.celery.TransactionAwareTask.run_instantly'
         run_asynchronously = (
-            'zeit.cms.celery.TransactionAwareTask.run_asynchronously')
+            'z3c.celery.celery.TransactionAwareTask.run_asynchronously')
         with mock.patch(run_instantly, return_value=False), \
                 mock.patch(run_asynchronously, return_value=False):
             checkout_and_checkin()

@@ -1,9 +1,9 @@
+import z3c.celery
 from zeit.solr import query as lq
 import argparse
 import gocept.runner
 import grokcore.component
 import logging
-import zeit.cms.celery
 import zeit.cms.checkout.interfaces
 import zeit.cms.interfaces
 import zeit.cms.repository.interfaces
@@ -167,7 +167,7 @@ def index_after_checkin(context, event):
     do_index_object.delay(context.uniqueId)
 
 
-@zeit.cms.celery.task()
+@z3c.celery.task
 def do_index_object(unique_id):
     context = zeit.cms.interfaces.ICMSContent(unique_id, None)
     if context is None:
@@ -187,7 +187,7 @@ def unindex_on_remove(context, event):
     do_unindex_unique_id.delay(context.uniqueId)
 
 
-@zeit.cms.celery.CELERY.task()
+@z3c.celery.task
 def do_unindex_unique_id(uniqueId):
     zope.component.getAdapter(
         uniqueId, zeit.solr.interfaces.IUpdater, name='delete').update()

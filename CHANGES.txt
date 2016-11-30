@@ -1,10 +1,10 @@
 zeit.solr changes
 =================
 
-2.10.1 (unreleased)
--------------------
+2.11 (unreleased)
+-----------------
 
-- Nothing changed yet.
+- ZON-3513: Use z3c.celery for the async tasks.
 
 
 2.10.0 (2016-09-28)
