@@ -7,6 +7,12 @@ zeit.solr changes
 - ZON-3513: Use z3c.celery for the async tasks.
 
 
+2.10.1 (2016-11-22)
+-------------------
+
+- MAINT: Speed up Index setup on import time.
+
+
 2.10.0 (2016-09-28)
 -------------------
 
