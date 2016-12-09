@@ -1,8 +1,8 @@
 zeit.solr changes
 =================
 
-2.11 (unreleased)
------------------
+3.0 (unreleased)
+----------------
 
 - ZON-3513: Use z3c.celery for the async tasks.
 

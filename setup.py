@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='zeit.solr',
-    version='2.11.dev0',
+    version='3.0.dev0',
     author='gocept, Zeit Online',
     author_email='zon-backend@zeit.de',
     url='http://www.zeit.de',
@@ -22,7 +22,7 @@ setup(
         'pysolr >= 3.0.0',
         'setuptools',
         'z3c.celery',
-        'zeit.cms>=2.93.dev0',
+        'zeit.cms >= 3.0.dev0',
         'zeit.connector>=1.24.0dev',
         'zeit.content.article>=3.14.1.dev0',
         'zeit.content.image',

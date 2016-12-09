@@ -23,12 +23,6 @@ class RequestHandler(gocept.httpserverlayer.custom.RequestHandler):
             self.send_header('Reason', 'Nothing to serve for %s' % self.path)
             self.end_headers()
 
-# XXX appending to product config is not very well supported right now
-cms_product_config = zeit.cms.testing.cms_product_config.replace(
-    '</product-config>', """\
-  task-queue-solr events
-</product-config>""")
-
 
 product_config = """\
 <product-config zeit.solr>
@@ -59,7 +53,7 @@ class ZCMLLayer(zeit.cms.testing.ZCMLLayer):
 
 ZCML_LAYER = ZCMLLayer(
     'ftesting.zcml',
-    product_config=cms_product_config +
+    product_config=zeit.cms.testing.cms_product_config +
     zeit.content.article.testing.product_config +
     product_config)
 
