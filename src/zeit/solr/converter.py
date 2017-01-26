@@ -472,6 +472,9 @@ class SolrConverter(object):
         zeit.cms.content.interfaces.ICommonMetadata,
         'tldr_date')
     VolumeIndex(zeit.cms.interfaces.ICMSContent, None)
+    Index(
+        zeit.cms.content.interfaces.ICommonMetadata,
+        'access')
 
     def __init__(self, context):
         self.context = context
