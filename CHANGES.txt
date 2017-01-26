@@ -1,7 +1,7 @@
 zeit.solr changes
 =================
 
-2.10.2 (unreleased)
+2.11.0 (2017-01-26)
 -------------------
 
 - ZON-3666: Add Solr-Field `access`
