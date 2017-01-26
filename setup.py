@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='zeit.solr',
-    version='2.11.0',
+    version='2.11.1.dev0',
     author='gocept, Zeit Online',
     author_email='zon-backend@zeit.de',
     url='http://www.zeit.de',
