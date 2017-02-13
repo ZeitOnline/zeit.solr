@@ -275,6 +275,19 @@ class ImageIndex(Index):
         self.append_to_node(unicode(type), doc_node)
 
 
+class ImageExpireDate(Date):
+
+    def process(self, value, doc_node):
+        if value is None:
+            return
+        pub = zeit.workflow.interfaces.ITimeBasedPublishing(value, None)
+        if pub is not None:
+            expires = pub.released_to
+        if expires is None:
+            expires = ''
+        super(ImageExpireDate, self).process(expires, doc_node)
+
+
 class VolumeIndex(Index):
     # XXX kludgy special case to only apply to IVolume objects and not to other
     # ICMSContent that has been adapted to find their IVolume.
@@ -406,6 +419,9 @@ class SolrConverter(object):
     ImageIndex(
         zeit.content.image.interfaces.IImages,
         'image', solr='image-reference')
+    ImageExpireDate(
+        zeit.content.image.interfaces.IImages,
+        'image', solr='image-expire-date')
     RawIndex(
         zeit.cms.content.interfaces.ICommonMetadata,
         'raw', solr='raw-tags')
@@ -472,6 +488,9 @@ class SolrConverter(object):
         zeit.cms.content.interfaces.ICommonMetadata,
         'tldr_date')
     VolumeIndex(zeit.cms.interfaces.ICMSContent, None)
+    Index(
+        zeit.cms.content.interfaces.ICommonMetadata,
+        'access')
 
     def __init__(self, context):
         self.context = context

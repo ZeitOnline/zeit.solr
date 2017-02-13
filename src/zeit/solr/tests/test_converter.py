@@ -1,4 +1,6 @@
+import datetime
 import mock
+import pytz
 import unittest
 import zeit.solr.testing
 
@@ -66,8 +68,6 @@ class TestConverter(zeit.solr.testing.FunctionalTestCase):
 
     def test_lsc_should_fall_back_to_modified(self):
         from zope.dublincore.interfaces import IDCTimes
-        import datetime
-        import pytz
         content = self.get_content()
         now = datetime.datetime(2011, 1, 2, 3, 4, tzinfo=pytz.UTC)
         IDCTimes(content).modified = now
@@ -78,8 +78,6 @@ class TestConverter(zeit.solr.testing.FunctionalTestCase):
 
     def test_lsc_should_be_used_if_set(self):
         from zeit.cms.content.interfaces import ISemanticChange
-        import datetime
-        import pytz
         content = self.get_content()
         now = datetime.datetime(2011, 1, 2, 3, 4, tzinfo=pytz.UTC)
         ISemanticChange(content).last_semantic_change = now
@@ -91,8 +89,6 @@ class TestConverter(zeit.solr.testing.FunctionalTestCase):
     def test_lsc_should_not_be_duplicate_if_both_lsc_and_modified_set(self):
         from zeit.cms.content.interfaces import ISemanticChange
         from zope.dublincore.interfaces import IDCTimes
-        import datetime
-        import pytz
         content = self.get_content()
         modified = datetime.datetime(2011, 1, 2, 3, 4, tzinfo=pytz.UTC)
         IDCTimes(content).modified = modified
@@ -144,8 +140,6 @@ class TestConverter(zeit.solr.testing.FunctionalTestCase):
             xml.xpath('//field[@name="ns-print-ressort"]')[0].text)
 
     def test_volume_is_indexed(self):
-        import datetime
-        import pytz
         import zeit.content.volume.volume
         volume = zeit.content.volume.volume.Volume()
         volume.uniqueId = 'http://xml.zeit.de/volume'
@@ -181,3 +175,16 @@ class TestConverter(zeit.solr.testing.FunctionalTestCase):
 
         xml = self.convert(content)
         self.assertFalse(xml.xpath('//field[@name="date_digital_published"]'))
+
+    def test_relased_to_date_of_teaser_image_is_indexed(self):
+        image = zeit.cms.interfaces.ICMSContent(
+            'http://xml.zeit.de/2006/DSC00109_2.JPG')
+        pub = zeit.cms.workflow.interfaces.IPublishInfo(image)
+        pub.released_to = datetime.datetime(2015, 1, 1, 0, 0, tzinfo=pytz.UTC)
+        content = self.get_content()
+        zeit.content.image.interfaces.IImages(content).image = image
+
+        xml = self.convert(content)
+        self.assertEqual(
+            '2015-01-01T00:00:00Z',
+            xml.xpath('//field[@name="image-expire-date"]')[0].text)

@@ -99,6 +99,7 @@ Convert an article and check resultset:
     <field name="year">2007</field>
     <field name="icon">/++noop++7b96ef8299459c6372971b040141db4d/@@/zeit-content-article-interfaces-IArticle-zmi_icon.png</field>
     <field name="lead_candidate">true</field>
+    <field name="access">free</field>
   </doc>
 </add>
 <BLANKLINE>
@@ -146,6 +147,7 @@ Check out the article for further field tests.
     <field name="year">2007</field>
     <field name="icon">/++noop++7b96ef8299459c6372971b040141db4d/@@/zeit-content-article-interfaces-IArticle-zmi_icon.png</field>
     <field name="lead_candidate">true</field>
+    <field name="access">free</field>
   </doc>
 </add>
 <BLANKLINE>
@@ -264,6 +266,7 @@ Create a new article containing some raw fields.
     <field name="title">my_article</field>
     <field name="type">article</field>
     <field name="icon">/++noop++7b96ef8299459c6372971b040141db4d/@@/zeit-content-article-interfaces-IArticle-zmi_icon.png</field>
+    <field name="access">free</field>
   </doc>
 </add>
 

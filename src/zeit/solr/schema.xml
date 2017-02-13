@@ -268,6 +268,7 @@
    <field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
 
    <!-- My fields -->
+   <field name="access" type="string" indexed="true" stored="true" />
    <field name="alt" type="text" indexed="true" stored="true" />
    <field name="authors" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="authors_fulltext" type="text" indexed="true" stored="false" />
@@ -295,6 +296,9 @@
    <field name="has_recensions" type="boolean" indexed="true" stored="true" />
    <field name="icon" type="string" indexed="false" stored="true" />
    <field name="image-reference" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name="image-expire-date" type="date" indexed="true" stored="true" multiValued="true" />
+   <!-- to fake compatibility with the external schema -->
+   <field name="image-base-id" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="indexteaser_text" type="text" indexed="true" stored="true" />
    <field name="indexteaser_title" type="text" indexed="true" stored="true" />
    <field name="is_breaking" type="boolean" indexed="true" stored="true" />

@@ -7,6 +7,18 @@ zeit.solr changes
 - ZON-3513: Use z3c.celery for the async tasks.
 
 
+2.12.0 (2017-02-13)
+-------------------
+
+- BUG-648: Add Solr-Field `image-expire-date`
+
+
+2.11.0 (2017-01-26)
+-------------------
+
+- ZON-3666: Add Solr-Field `access`
+
+
 2.10.1 (2016-11-22)
 -------------------
 
