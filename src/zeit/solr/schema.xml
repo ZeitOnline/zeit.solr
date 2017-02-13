@@ -296,6 +296,7 @@
    <field name="has_recensions" type="boolean" indexed="true" stored="true" />
    <field name="icon" type="string" indexed="false" stored="true" />
    <field name="image-reference" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name="image-expire-date" type="date" indexed="true" stored="true" multiValued="true" />
    <!-- to fake compatibility with the external schema -->
    <field name="image-base-id" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="indexteaser_text" type="text" indexed="true" stored="true" />

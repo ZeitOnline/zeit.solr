@@ -4,7 +4,7 @@ zeit.solr changes
 2.11.1 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- BUG-648: Add Solr-Field `image-expire-date`
 
 
 2.11.0 (2017-01-26)
