@@ -4,7 +4,7 @@ zeit.solr changes
 2.12.1 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- PERF: Don't update solr during publish checkout/checkin cycle
 
 
 2.12.0 (2017-02-13)
