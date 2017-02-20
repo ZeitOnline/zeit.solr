@@ -289,20 +289,16 @@ class ImageExpireDate(Date):
 
 
 class VolumeIndex(Index):
-    # XXX kludgy special case to only apply to IVolume objects and not to other
+    # Special case: only apply to IVolume objects and not to other
     # ICMSContent that has been adapted to find their IVolume.
 
     def process(self, value, doc_node):
         if not zeit.content.volume.interfaces.IVolume.providedBy(value):
             return
 
-        self.solr = 'product_id'
-        self.append_to_node(value.product.id, doc_node)
-
         if value.date_digital_published:
             solr_date = str(value.date_digital_published).replace(' ', 'T', 1)
             solr_date = solr_date.replace('+00:00', 'Z')
-            self.solr = 'date_digital_published'
             self.append_to_node(unicode(solr_date), doc_node)
 
 
@@ -487,7 +483,8 @@ class SolrConverter(object):
     Date(
         zeit.cms.content.interfaces.ICommonMetadata,
         'tldr_date')
-    VolumeIndex(zeit.cms.interfaces.ICMSContent, None)
+    VolumeIndex(zeit.cms.interfaces.ICMSContent, None,
+                solr='date_digital_published')
     Index(
         zeit.cms.content.interfaces.ICommonMetadata,
         'access')
