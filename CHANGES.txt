@@ -4,7 +4,7 @@ zeit.solr changes
 2.12.2 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- FIX: Tests by no longer changing global state in `VolumeIndex`.
 
 
 2.12.1 (2017-02-16)
