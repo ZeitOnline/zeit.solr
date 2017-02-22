@@ -59,7 +59,6 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         repository = zope.component.getUtility(
             zeit.cms.repository.interfaces.IRepository)
         repository['t1'] = ExampleContentType()
-        transaction.commit()
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/t1')
 
@@ -99,17 +98,12 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         event = zope.lifecycleevent.ObjectAddedEvent(content)
         for ignored in zope.component.subscribers((content_sub, event), None):
             pass
-        try:
-            transaction.commit()
-        except IndexError:
-            pass
         self.assertFalse(self.solr.update_raw.called)
 
     def test_removed_event_calls_delete(self):
         content = ExampleContentType()
         content.uniqueId = 'xzy://bla/fasel'
         zope.event.notify(zope.lifecycleevent.ObjectRemovedEvent(content))
-        transaction.commit()
         query = self.solr.delete.call_args[1]
         self.assertEquals(
             {'q': 'uniqueId:(xzy\\://bla/fasel)', 'commit': False},
@@ -121,10 +115,6 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         event = zope.lifecycleevent.ObjectRemovedEvent(content)
         event.oldParent = zeit.cms.workingcopy.workingcopy.Workingcopy()
         zope.event.notify(event)
-        try:
-            transaction.commit()
-        except IndexError:
-            pass
         self.assertFalse(self.solr.delete.called)
 
     def test_invalid_updater_should_raise_type_error(self):
@@ -140,7 +130,6 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         with mock.patch('zeit.cms.interfaces.ICMSContent') as icc:
             icc.return_value = content
             zeit.solr.update.do_index_object('http://xml.zeit.de/testcontent')
-            transaction.commit()
             icc.assert_called_with('http://xml.zeit.de/testcontent', None)
 
     def test_do_index_object_should_not_raise_when_object_vanished(self):
@@ -149,5 +138,4 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
                 icc.return_value = None
                 zeit.solr.update.do_index_object(
                     'http://xml.zeit.de/testcontent')
-                transaction.commit()
                 self.assertFalse(iu.called)
