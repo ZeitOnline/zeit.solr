@@ -6,6 +6,14 @@ zeit.solr changes
 
 - ZON-3513: Use z3c.celery for the async tasks.
 
+- FIX: Tests by no longer changing global state in `VolumeIndex`.
+
+
+2.12.1 (2017-02-16)
+-------------------
+
+- PERF: Don't update solr during publish checkout/checkin cycle
+
 
 2.12.0 (2017-02-13)
 -------------------
