@@ -89,7 +89,6 @@ Convert an article and check resultset:
     <field name="serie">-</field>
     <field name="subtitle">Im Zuge des &#228;thiopischen Vormarsches auf Mogadischu kriechen in Somalia auch die alten Miliz-Chefs wieder hervor.</field>
     <field name="supertitle">Somalia</field>
-    <field name="teaser_supertitle">Somalia</field>
     <field name="teaser_title">R&#252;ckkehr der Warlords</field>
     <field name="teaser_text">Im Zuge des &#228;thiopischen Vormarsches auf Mogadischu kriechen in Somalia auch die alten Miliz-Chefs wieder hervor.</field>
     <field name="title">R&#252;ckkehr der Warlords</field>
@@ -138,7 +137,6 @@ Check out the article for further field tests.
     <field name="serie">-</field>
     <field name="subtitle">Im Zuge des &#228;thiopischen Vormarsches auf Mogadischu kriechen in Somalia auch die alten Miliz-Chefs wieder hervor.</field>
     <field name="supertitle">Somalia</field>
-    <field name="teaser_supertitle">Somalia</field>
     <field name="teaser_title">R&#252;ckkehr der Warlords</field>
     <field name="teaser_text">Im Zuge des &#228;thiopischen Vormarsches auf Mogadischu kriechen in Somalia auch die alten Miliz-Chefs wieder hervor.</field>
     <field name="title">Strip the &amp; please</field>
