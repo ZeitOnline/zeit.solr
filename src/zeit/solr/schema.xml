@@ -300,7 +300,6 @@
    <!-- to fake compatibility with the external schema -->
    <field name="image-base-id" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="indexteaser_text" type="text" indexed="true" stored="true" />
-   <field name="indexteaser_supertitle" type="text" indexed="true" stored="true" />
    <field name="indexteaser_title" type="text" indexed="true" stored="true" />
    <field name="is_breaking" type="boolean" indexed="true" stored="true" />
    <field name="is_instant_article" type="boolean" indexed="true" stored="true" />
@@ -389,7 +388,6 @@
    <copyField source="alt" dest="text" />
    <copyField source="byline" dest="text" />
    <copyField source="caption" dest="text" />
-   <copyField source="indexteaser_supertitle" dest="text" />
    <copyField source="indexteaser_title" dest="text" />
    <copyField source="indexteaser_text" dest="text" />
    <copyField source="keywords" dest="text" />
