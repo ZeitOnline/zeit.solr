@@ -4,6 +4,8 @@ zeit.solr changes
 2.12.2 (unreleased)
 -------------------
 
+- BUG-656: Add Solr-Field `teaser_supertitle`
+
 - FIX: Tests by no longer changing global state in `VolumeIndex`.
 
 

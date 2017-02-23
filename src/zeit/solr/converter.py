@@ -444,6 +444,9 @@ class SolrConverter(object):
         'supertitle')
     Index(
         zeit.cms.content.interfaces.ICommonMetadata,
+        'teaserSupertitle', solr='teaser_supertitle')
+    Index(
+        zeit.cms.content.interfaces.ICommonMetadata,
         'teaserTitle', solr='teaser_title')
     Index(
         zeit.cms.content.interfaces.ICommonMetadata,
