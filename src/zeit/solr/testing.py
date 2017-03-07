@@ -6,6 +6,7 @@ import zeit.content.article.testing
 import zeit.solr.interfaces
 import zope.component
 import zope.interface
+import zeit.workflow.testing
 
 
 class RequestHandler(gocept.httpserverlayer.custom.RequestHandler):
@@ -61,6 +62,7 @@ ZCML_LAYER = ZCMLLayer(
     'ftesting.zcml',
     product_config=cms_product_config +
     zeit.content.article.testing.product_config +
+    zeit.workflow.testing.product_config +
     product_config)
 
 

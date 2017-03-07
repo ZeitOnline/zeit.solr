@@ -4,7 +4,7 @@ zeit.solr changes
 2.12.3 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- FIX: Update Solr during publishing again. Is needed for ZON-3447.
 
 
 2.12.2 (2017-02-23)

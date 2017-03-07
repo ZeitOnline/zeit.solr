@@ -2,6 +2,7 @@
 
 from __future__ import with_statement
 from zeit.cms.testcontenttype.testcontenttype import ExampleContentType
+from zeit.cms.workflow.interfaces import IPublish, IPublishInfo
 import StringIO
 import gocept.async
 import gocept.async.tests
@@ -89,6 +90,14 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         process()
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/testcontent')
+
+    def test_update_on_publish(self):
+        repository = zope.component.getUtility(
+            zeit.cms.repository.interfaces.IRepository)
+        IPublishInfo(self.repository['testcontent']).urgent = True
+        IPublish(repository['testcontent']).publish(async=False)
+        process()
+        self.assertTrue(self.solr.update_raw.called)
 
     def test_update_should_be_called_in_async(self):
         checkout_and_checkin()
