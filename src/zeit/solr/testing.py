@@ -32,6 +32,9 @@ cms_product_config = zeit.cms.testing.cms_product_config.replace(
 
 
 product_config = """\
+<product-config zeit.content.volume>
+    default-teaser-text Teaser {{name}}/{{year}}
+</product-config>
 <product-config zeit.solr>
     solr-url http://localhost:{port}/solr/
 </product-config>
