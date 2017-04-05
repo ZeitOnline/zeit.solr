@@ -3,10 +3,11 @@ import mock
 import plone.testing
 import zeit.cms.testing
 import zeit.content.article.testing
+import zeit.content.volume.testing
 import zeit.solr.interfaces
+import zeit.workflow.testing
 import zope.component
 import zope.interface
-import zeit.workflow.testing
 
 
 class RequestHandler(gocept.httpserverlayer.custom.RequestHandler):
@@ -32,9 +33,6 @@ cms_product_config = zeit.cms.testing.cms_product_config.replace(
 
 
 product_config = """\
-<product-config zeit.content.volume>
-    default-teaser-text Teaser {{name}}/{{year}}
-</product-config>
 <product-config zeit.solr>
     solr-url http://localhost:{port}/solr/
 </product-config>
@@ -61,10 +59,17 @@ class ZCMLLayer(zeit.cms.testing.ZCMLLayer):
         super(ZCMLLayer, self).setUp()
 
 
+# Prevent confusion with string formatting during product config test setup.
+volume_config = zeit.content.volume.testing.product_config
+volume_config = volume_config.replace('{', '{{')
+volume_config = volume_config.replace('}', '}}')
+
+
 ZCML_LAYER = ZCMLLayer(
     'ftesting.zcml',
     product_config=cms_product_config +
     zeit.content.article.testing.product_config +
+    volume_config +
     zeit.workflow.testing.product_config +
     product_config)
 
