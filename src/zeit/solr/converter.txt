@@ -180,9 +180,7 @@ Convert an image and check resultset:
     <field name="title">image title</field>
     <field name="type">image</field>
     <field name="uuid">{urn:uuid:e2500273-fa09-48ff-a63d-063f3fcb3e4e}</field>
-    <field name="volume">5</field>
     <field name="uniqueId">http://xml.zeit.de/2006/DSC00109_2.JPG</field>
-    <field name="year">2006</field>
     <field name="icon">/++noop++3ee62bd74c764a2db7c9faa0a7ea9661/@@/zeit-content-image-interfaces-IImage-zmi_icon.png</field>
     <field name="graphical-preview-url">/repository/2006/DSC00109_2.JPG/thumbnail</field>
     <field name="graphical-preview-url-large">/repository/2006/DSC00109_2.JPG/preview</field>
