@@ -4,7 +4,8 @@ zeit.solr changes
 2.12.4 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- BUG-750: Update solr during publishing explicitly, not as a
+  side-effect of the checkout/checkin cycle
 
 
 2.12.3 (2017-03-07)
