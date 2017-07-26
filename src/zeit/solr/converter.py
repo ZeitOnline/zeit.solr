@@ -331,9 +331,6 @@ class SolrConverter(object):
         'is_breaking')
     Index(
         zeit.cms.content.interfaces.ICommonMetadata,
-        'push_news')
-    Index(
-        zeit.cms.content.interfaces.ICommonMetadata,
         'commentsAllowed', solr='allow_comments')
     Index(
         zeit.cms.content.interfaces.ICommonMetadata,

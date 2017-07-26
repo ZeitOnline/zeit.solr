@@ -66,7 +66,6 @@ Convert an article and check resultset:
     <field name="referenced">http://xml.zeit.de/2006/DSC00109_2.JPG</field>
     <field name="authors_fulltext">Hans Meiser</field>
     <field name="breaking_news">true</field>
-    <field name="push_news">false</field>
     ...
     <field name="byline">Von Jochen Stahnke</field>
     <field name="countings">true</field>
