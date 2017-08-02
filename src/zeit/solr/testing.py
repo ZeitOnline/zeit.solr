@@ -3,7 +3,9 @@ import mock
 import plone.testing
 import zeit.cms.testing
 import zeit.content.article.testing
+import zeit.content.volume.testing
 import zeit.solr.interfaces
+import zeit.workflow.testing
 import zope.component
 import zope.interface
 
@@ -51,10 +53,18 @@ class ZCMLLayer(zeit.cms.testing.ZCMLLayer):
         super(ZCMLLayer, self).setUp()
 
 
+# Prevent confusion with string formatting during product config test setup.
+volume_config = zeit.content.volume.testing.product_config
+volume_config = volume_config.replace('{', '{{')
+volume_config = volume_config.replace('}', '}}')
+
+
 ZCML_LAYER = ZCMLLayer(
     'ftesting.zcml',
     product_config=zeit.cms.testing.cms_product_config +
     zeit.content.article.testing.product_config +
+    volume_config +
+    zeit.workflow.testing.product_config +
     product_config)
 
 

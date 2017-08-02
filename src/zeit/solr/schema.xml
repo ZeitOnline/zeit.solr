@@ -316,7 +316,6 @@
    <field name="product_id" type="string_nt" indexed="true" stored="true" />
    <field name="product_text" type="text" indexed="true" stored="true" />
    <field name="published" type="string_nt" indexed="true" stored="true" />
-   <field name="push_news" type="boolean" indexed="true" stored="true" />
    <field name="refined" type="string_nt" indexed="true" stored="true" />
    <field name="raw-tags" type="text" indexed="true" stored="true" />
    <field name="referenced" type="string_nt" indexed="true" stored="true" multiValued="true" />
@@ -328,6 +327,7 @@
    <field name="subtitle" type="text" indexed="true" stored="true" />
    <field name="supertitle" type="text" indexed="true" stored="true" />
    <field name="teaser_text" type="text" indexed="true" stored="true" />
+   <field name="teaser_supertitle" type="text" indexed="true" stored="true" />
    <field name="teaser_title" type="text" indexed="true" stored="true" />
    <field name="title" type="text" indexed="true" stored="true" />
    <field name="tldr_date" type="date" indexed="true" stored="true" />
@@ -397,6 +397,7 @@
    <copyField source="sub_ressort" dest="text" />
    <copyField source="subtitle" dest="text" />
    <copyField source="supertitle" dest="text" />
+   <copyField source="teaser_supertitle" dest="text" />
    <copyField source="teaser_title" dest="text" />
    <copyField source="teaser_text" dest="text" />
    <copyField source="title" dest="text" />

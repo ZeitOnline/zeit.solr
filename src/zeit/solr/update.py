@@ -169,6 +169,13 @@ def index_after_checkin(context, event):
     do_index_object.delay(context.uniqueId)
 
 
+@grokcore.component.subscribe(
+    zeit.cms.interfaces.ICMSContent,
+    zeit.cms.workflow.interfaces.IPublishedEvent)
+def index_after_checkin(context, event):
+    do_index_object(context.uniqueId)
+
+
 @z3c.celery.task(urgency='solr')
 def do_index_object(unique_id):
     context = zeit.cms.interfaces.ICMSContent(unique_id, None)
