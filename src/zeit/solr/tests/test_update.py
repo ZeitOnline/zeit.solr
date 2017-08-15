@@ -48,32 +48,24 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
             query)
 
     def test_update_on_create(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
-        repository['t1'] = ExampleContentType()
+        self.repository['t1'] = ExampleContentType()
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/t1')
 
     def test_update_on_checkin(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
-        with checked_out(repository['testcontent']):
+        with checked_out(self.repository['testcontent']):
             pass
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/testcontent')
 
     def test_update_on_publish(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
         IPublishInfo(self.repository['testcontent']).urgent = True
-        IPublish(repository['testcontent']).publish(async=False)
+        IPublish(self.repository['testcontent']).publish(async=False)
         self.assertTrue(self.solr.update_raw.called)
 
     def test_update_should_be_called_in_async(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
         with mock.patch('zeit.solr.update.do_index_object') as index:
-            with checked_out(repository['testcontent']):
+            with checked_out(self.repository['testcontent']):
                 pass
             self.assertTrue(index.delay.called)
 
