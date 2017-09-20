@@ -6,6 +6,10 @@ zeit.solr changes
 
 - ZON-3513: Use z3c.celery for the async tasks.
 
+
+2.12.5 (2017-08-07)
+-------------------
+
 - ZON-3677: Remove `ICommonMetadata.push_news`, it's not used anymore
 
 
