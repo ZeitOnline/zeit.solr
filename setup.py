@@ -21,7 +21,6 @@ setup(
         'plone.testing',
         'pysolr >= 3.0.0',
         'setuptools',
-        'z3c.celery',
         'zeit.cms >= 3.0.dev0',
         'zeit.connector>=1.24.0dev',
         'zeit.content.article>=3.14.1.dev0',
