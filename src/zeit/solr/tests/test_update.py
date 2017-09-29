@@ -1,42 +1,15 @@
-# coding: utf8
-
+# coding: utf-8
 from __future__ import with_statement
+from zeit.cms.checkout.helper import checked_out
 from zeit.cms.testcontenttype.testcontenttype import ExampleContentType
 from zeit.cms.workflow.interfaces import IPublish, IPublishInfo
-import StringIO
-import gocept.async
-import gocept.async.tests
-import logging
 import mock
-import zeit.cms.checkout.helper
 import zeit.cms.repository
 import zeit.cms.workingcopy.workingcopy
 import zeit.solr.testing
 import zope.component
 import zope.event
 import zope.lifecycleevent
-
-
-@gocept.async.function(service='events')
-def checkout_and_checkin():
-    repository = zope.component.getUtility(
-        zeit.cms.repository.interfaces.IRepository)
-    with zeit.cms.checkout.helper.checked_out(repository['testcontent']):
-        pass
-
-
-def process():
-    log_output = StringIO.StringIO()
-    log_handler = logging.StreamHandler(log_output)
-    logging.root.addHandler(log_handler)
-    old_log_level = logging.root.level
-    logging.root.setLevel(logging.ERROR)
-    try:
-        gocept.async.tests.process()
-    finally:
-        logging.root.removeHandler(log_handler)
-        logging.root.setLevel(old_log_level)
-    assert not log_output.getvalue(), log_output.getvalue()
 
 
 class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
@@ -75,34 +48,26 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
             query)
 
     def test_update_on_create(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
-        repository['t1'] = ExampleContentType()
-        process()
+        self.repository['t1'] = ExampleContentType()
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/t1')
 
     def test_update_on_checkin(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
-        with zeit.cms.checkout.helper.checked_out(repository['testcontent']):
+        with checked_out(self.repository['testcontent']):
             pass
-        process()
         self.assertTrue(self.solr.update_raw.called)
         self.assert_unique_id('http://xml.zeit.de/testcontent')
 
     def test_update_on_publish(self):
-        repository = zope.component.getUtility(
-            zeit.cms.repository.interfaces.IRepository)
         IPublishInfo(self.repository['testcontent']).urgent = True
-        IPublish(repository['testcontent']).publish(async=False)
-        process()
+        IPublish(self.repository['testcontent']).publish(async=False)
         self.assertTrue(self.solr.update_raw.called)
 
     def test_update_should_be_called_in_async(self):
-        checkout_and_checkin()
-        process()
-        self.assertTrue(self.solr.update_raw.called)
+        with mock.patch('zeit.solr.update.do_index_object') as index:
+            with checked_out(self.repository['testcontent']):
+                pass
+            self.assertTrue(index.delay.called)
 
     def test_recursive(self):
         zeit.solr.interfaces.IUpdater(
@@ -119,17 +84,12 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         event = zope.lifecycleevent.ObjectAddedEvent(content)
         for ignored in zope.component.subscribers((content_sub, event), None):
             pass
-        try:
-            process()
-        except IndexError:
-            pass
         self.assertFalse(self.solr.update_raw.called)
 
     def test_removed_event_calls_delete(self):
         content = ExampleContentType()
         content.uniqueId = 'xzy://bla/fasel'
         zope.event.notify(zope.lifecycleevent.ObjectRemovedEvent(content))
-        process()
         query = self.solr.delete.call_args[1]
         self.assertEquals(
             {'q': 'uniqueId:(xzy\\://bla/fasel)', 'commit': False},
@@ -141,10 +101,6 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         event = zope.lifecycleevent.ObjectRemovedEvent(content)
         event.oldParent = zeit.cms.workingcopy.workingcopy.Workingcopy()
         zope.event.notify(event)
-        try:
-            process()
-        except IndexError:
-            pass
         self.assertFalse(self.solr.delete.called)
 
     def test_invalid_updater_should_raise_type_error(self):
@@ -160,7 +116,6 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         with mock.patch('zeit.cms.interfaces.ICMSContent') as icc:
             icc.return_value = content
             zeit.solr.update.do_index_object('http://xml.zeit.de/testcontent')
-            process()
             icc.assert_called_with('http://xml.zeit.de/testcontent', None)
 
     def test_do_index_object_should_not_raise_when_object_vanished(self):
@@ -169,5 +124,4 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
                 icc.return_value = None
                 zeit.solr.update.do_index_object(
                     'http://xml.zeit.de/testcontent')
-                process()
                 self.assertFalse(iu.called)

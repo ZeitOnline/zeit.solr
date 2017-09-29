@@ -1,10 +1,9 @@
 from zeit.solr import query as lq
 import argparse
-import gocept.async
 import gocept.runner
 import grokcore.component
 import logging
-import zeit.cms.async
+import zeit.cms.celery
 import zeit.cms.checkout.interfaces
 import zeit.cms.interfaces
 import zeit.cms.repository.interfaces
@@ -157,9 +156,8 @@ def index_after_add(event):
     if zeit.cms.workingcopy.interfaces.IWorkingcopy.providedBy(
             event.newParent):
         return
-    log.info('AfterAdd: Creating async index job for %s (async=%s)' % (
-        context.uniqueId, gocept.async.is_async()))
-    do_index_object(context.uniqueId)
+    log.info('AfterAdd: Creating async index job for %s' % (context.uniqueId))
+    do_index_object.delay(context.uniqueId)
 
 
 @grokcore.component.subscribe(
@@ -168,7 +166,7 @@ def index_after_add(event):
 def index_after_checkin(context, event):
     if event.publishing:
         return
-    do_index_object(context.uniqueId)
+    do_index_object.delay(context.uniqueId)
 
 
 @grokcore.component.subscribe(
@@ -178,7 +176,7 @@ def index_after_checkin(context, event):
     do_index_object(context.uniqueId)
 
 
-@zeit.cms.async.function(queue='solr')
+@zeit.cms.celery.task(queuename='search')
 def do_index_object(unique_id):
     context = zeit.cms.interfaces.ICMSContent(unique_id, None)
     if context is None:
@@ -195,10 +193,10 @@ def unindex_on_remove(context, event):
     if zeit.cms.workingcopy.interfaces.IWorkingcopy.providedBy(
             event.oldParent):
         return
-    do_unindex_unique_id(context.uniqueId)
+    do_unindex_unique_id.delay(context.uniqueId)
 
 
-@zeit.cms.async.function()
+@zeit.cms.celery.task(queuename='search')
 def do_unindex_unique_id(uniqueId):
     zope.component.getAdapter(
         uniqueId, zeit.solr.interfaces.IUpdater, name='delete').update()

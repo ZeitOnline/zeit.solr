@@ -1,10 +1,10 @@
 zeit.solr changes
 =================
 
-2.12.6 (unreleased)
--------------------
+2.13.0 (unreleased)
+----------------
 
-- Nothing changed yet.
+- ZON-3409: Move from remotetask to celery
 
 
 2.12.5 (2017-08-07)
