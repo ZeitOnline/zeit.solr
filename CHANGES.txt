@@ -1,7 +1,7 @@
 zeit.solr changes
 =================
 
-2.13.1 (unreleased)
+2.13.1 (2017-10-17)
 -------------------
 
 - BUG-796: Work around celery vs. DAV-cache race condition
