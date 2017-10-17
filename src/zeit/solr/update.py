@@ -166,7 +166,10 @@ def index_after_add(event):
 def index_after_checkin(context, event):
     if event.publishing:
         return
-    do_index_object.delay(context.uniqueId)
+    # XXX Work around race condition between celery/redis (applies already in
+    # tpc_vote) and DAV-cache in ZODB (applies only in tpc_finish, so the
+    # celery job *may* start executing before that happend), see BUG-796.
+    do_index_object.apply_async((context.uniqueId,), countdown=5)
 
 
 @grokcore.component.subscribe(

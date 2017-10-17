@@ -67,7 +67,7 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         with mock.patch('zeit.solr.update.do_index_object') as index:
             with checked_out(self.repository['testcontent']):
                 pass
-            self.assertTrue(index.delay.called)
+            self.assertTrue(index.apply_async.called)
 
     def test_recursive(self):
         zeit.solr.interfaces.IUpdater(
