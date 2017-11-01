@@ -175,7 +175,14 @@ def index_after_checkin(context, event):
 @grokcore.component.subscribe(
     zeit.cms.interfaces.ICMSContent,
     zeit.cms.workflow.interfaces.IPublishedEvent)
-def index_after_checkin(context, event):
+def index_after_publish(context, event):
+    do_index_object(context.uniqueId)
+
+
+@grokcore.component.subscribe(
+    zeit.cms.interfaces.ICMSContent,
+    zeit.cms.workflow.interfaces.IRetractedEvent)
+def index_after_retract(context, event):
     do_index_object(context.uniqueId)
 
 

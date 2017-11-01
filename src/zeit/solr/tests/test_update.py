@@ -63,6 +63,11 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         IPublish(self.repository['testcontent']).publish(async=False)
         self.assertTrue(self.solr.update_raw.called)
 
+    def test_update_on_retract(self):
+        IPublishInfo(self.repository['testcontent']).published = True
+        IPublish(self.repository['testcontent']).retract(async=False)
+        self.assertTrue(self.solr.update_raw.called)
+
     def test_update_should_be_called_in_async(self):
         with mock.patch('zeit.solr.update.do_index_object') as index:
             with checked_out(self.repository['testcontent']):

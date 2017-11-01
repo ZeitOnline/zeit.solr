@@ -4,7 +4,7 @@ zeit.solr changes
 2.13.2 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- FIX: Update solr after retract as well
 
 
 2.13.1 (2017-10-17)
