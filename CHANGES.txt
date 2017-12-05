@@ -1,7 +1,7 @@
 zeit.solr changes
 =================
 
-2.13.3 (unreleased)
+2.13.3 (2017-12-05)
 -------------------
 
 - FIX: Add SolrIndecies utilities to converter again
