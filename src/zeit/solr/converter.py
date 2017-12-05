@@ -498,7 +498,9 @@ class SolrConverter(object):
         root_node = lxml.objectify.E.add()
         doc_node = lxml.objectify.E.doc()
         root_node.append(doc_node)
-        indexes = self.solr_mapping
+        indexes = self.solr_mapping + (
+            zope.component.getAllUtilitiesRegisteredFor(
+                zeit.solr.interfaces.IIndex))
         for index in indexes:
             __traceback_info__ = (self.context, index)
             if index.solr in self.solr_fields_seen:
