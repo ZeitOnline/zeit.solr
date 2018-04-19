@@ -4,7 +4,7 @@ zeit.solr changes
 2.13.4 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- OPS-874: Do not traverse folders that are marked accordingly
 
 
 2.13.3 (2017-12-05)

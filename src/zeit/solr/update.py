@@ -1,3 +1,4 @@
+from zeit.cms.repository.interfaces import ICollection, INonRecursiveCollection
 from zeit.solr import query as lq
 import argparse
 import gocept.runner
@@ -42,7 +43,7 @@ def update_container(container_id, needs_publish):
     stack = [start_container]
     while stack:
         content = stack.pop(0)
-        if zeit.cms.repository.interfaces.ICollection.providedBy(content):
+        if ICollection.providedBy(content):
             stack.extend(content.values())
         if needs_publish is True:
             pubinfo = zeit.cms.workflow.interfaces.IPublishInfo(content)
@@ -113,10 +114,9 @@ class ContentUpdater(object):
                 log.warning("Solr server returned '%s' while updating %s" %
                             (e, content.uniqueId))
                 return None
-            else:
-                if zeit.cms.repository.interfaces.ICollection.providedBy(
-                        content):
-                    stack.extend(content.values())
+            if (ICollection.providedBy(content) and
+                    not INonRecursiveCollection.providedBy(content)):
+                stack.extend(content.values())
 
 
 @zope.component.adapter(zeit.cms.interfaces.ICMSContent)

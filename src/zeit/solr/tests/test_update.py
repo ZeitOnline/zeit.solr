@@ -80,6 +80,18 @@ class UpdateTest(zeit.solr.testing.MockedFunctionalTestCase):
         # 1 Folder + 40 objects contained in it
         self.assertEquals(41, self.solr.update_raw.call_count)
 
+    def test_non_recursive_folders_should_not_be_indexed_recursively(self):
+        folder = zeit.cms.repository.folder.Folder()
+        zope.interface.alsoProvides(
+            folder, zeit.cms.repository.interfaces.INonRecursiveCollection)
+        self.repository['nonrecursive'] = folder
+        self.repository['nonrecursive']['test'] = ExampleContentType()
+
+        self.solr.update_raw.reset_mock()
+        zeit.solr.interfaces.IUpdater(
+            'http://xml.zeit.de/nonrecursive').update()
+        self.assertEquals(1, self.solr.update_raw.call_count)
+
     def test_added_event_only_for_events_object(self):
         content = ExampleContentType()
         content.uniqueId = 'xzy://bla/fasel'
